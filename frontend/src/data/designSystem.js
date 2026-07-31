@@ -1,0 +1,16 @@
+export const styleOSDesignSystem = Object.freeze({
+  name: 'Soft Editorial Intelligence / Custom',
+  background: 'warm-black',
+  typography: Object.freeze({ title: 'modern-soft-serif', body: 'neutral-sans' }),
+  grid: 'data-panel',
+  navigation: 'floating-capsule',
+  cards: 'large-radius-with-space',
+  analysisExperience: 'step-program',
+  reportExperience: 'fashion-editorial-report',
+  charts: 'organic',
+  imagery: 'material-and-light',
+  buttons: 'soft-capsule',
+  motion: 'scan-refresh',
+  density: 'balanced',
+  accent: '#d7ff45',
+})

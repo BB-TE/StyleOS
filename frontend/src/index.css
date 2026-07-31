@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, Aptos, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #eef0e8;
+  background: #0b0d0b;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #0b0d0b;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 76% 9%, rgb(215 255 69 / 0.055), transparent 28rem),
+    #0b0d0b;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.workspace-surface {
+  min-height: calc(100vh - 4.5rem);
+  background-image:
+    linear-gradient(rgb(238 240 232 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(238 240 232 / 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  background-position: -1px -1px;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
+  color: #969d92;
+  font-size: 0.75rem;
+  transition: color 150ms ease;
+}
+
+.nav-link:hover,
+.nav-link-active {
+  color: #eef0e8;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #d7ff45;
+  outline-offset: 4px;
+}
+
+.focus-ring-dark:focus-visible {
+  outline: 2px solid #f7f6f2;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+select option {
+  color: #eef0e8;
+  background: #131612;
+}
+
+::selection {
+  color: #0b0d0b;
+  background: #d7ff45;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0b0d0b; }
+::-webkit-scrollbar-thumb { background: #343a31; border: 3px solid #0b0d0b; }
+
+.system-grid {
+  background-image:
+    linear-gradient(rgb(238 240 232 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(238 240 232 / 0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.soft-panel {
+  border: 1px solid rgb(238 240 232 / 0.12);
+  border-radius: 1.5rem;
+  background: rgb(19 22 18 / 0.88);
+}
+
+.acid-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #d7ff45;
+  color: #10120d;
+  font-family: Inter, Aptos, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.acid-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 38px rgb(215 255 69 / 0.16);
+}
+
+.button-copy {
+  font-family: Inter, Aptos, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.signal-label {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #aeb5a8;
+}
+
+.scan-surface { position: relative; overflow: hidden; }
+.scan-surface::after {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(215 255 69 / 0.5), transparent);
+  animation: system-scan 5.5s linear infinite;
+}
+
+@keyframes system-scan { from { top: 0; } to { top: 100%; } }

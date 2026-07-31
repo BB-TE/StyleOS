@@ -1,0 +1,16 @@
+{
+  "name": "styleos",
+  "version": "0.1.0",
+  "private": true,
+  "description": "StyleOS AI styling and personal aesthetic decision system",
+  "scripts": {
+    "dev": "concurrently -n frontend,backend -c white,gray \"npm:dev:frontend\" \"npm:dev:backend\"",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix backend run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
