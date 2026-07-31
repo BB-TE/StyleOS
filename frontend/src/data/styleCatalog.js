@@ -1,8 +1,10 @@
 const bilingual = (zh, en) => Object.freeze({ zh, en })
+const publicBase = import.meta.env?.BASE_URL || '/'
+const styleAsset = (id) => `${publicBase}assets/styles/${id}.svg`
 
 export const styleCatalog = Object.freeze([
   {
-    id: 'cleanFit', name: 'Clean Fit', chineseName: '干净利落', tone: '#d7ff45',
+    id: 'cleanFit', name: 'Clean Fit', chineseName: '干净利落', tone: '#d7ff45', imageRef: styleAsset('cleanFit'),
     definition: bilingual('以清晰轮廓、克制配色和低装饰度建立整洁感，重点不在昂贵，而在合身与秩序。', 'A clear, low-detail wardrobe built on controlled color, clean lines, and deliberate fit.'),
     keywords: ['clean', 'precise', 'quiet', 'structured'], colors: ['炭黑', '冷白', '石灰', '深海军蓝'],
     silhouettes: bilingual(['直线轮廓', '自然肩线', '适度宽松'], ['Straight line', 'Natural shoulder', 'Moderate ease']),
@@ -14,7 +16,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['先统一基础色', '补一条好裤型', '最后升级外套'], ['Unify base colors', 'Fix the trouser line', 'Upgrade outerwear last']),
   },
   {
-    id: 'minimalJapanese', name: 'Minimal Japanese', chineseName: '日系极简', tone: '#b7c5a7',
+    id: 'minimalJapanese', name: 'Minimal Japanese', chineseName: '日系极简', tone: '#b7c5a7', imageRef: styleAsset('minimalJapanese'),
     definition: bilingual('以自然材质、松弛层次和留白感表达安静日常，版型宽松但仍保留纵向秩序。', 'Relaxed layering, natural textures, and quiet negative space with controlled volume.'),
     keywords: ['relaxed', 'natural', 'layered', 'quiet'], colors: ['燕麦', '苔藓绿', '炭灰', '米白'],
     silhouettes: bilingual(['落肩', '宽直裤', '层次叠穿'], ['Dropped shoulder', 'Wide-straight trouser', 'Soft layers']),
@@ -26,7 +28,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['从材质开始', '控制两层以内', '用鞋保持轻盈'], ['Start with texture', 'Keep to two layers', 'Use light footwear']),
   },
   {
-    id: 'americanVintage', name: 'American Vintage', chineseName: '美式复古', tone: '#d38b5d',
+    id: 'americanVintage', name: 'American Vintage', chineseName: '美式复古', tone: '#d38b5d', imageRef: styleAsset('americanVintage'),
     definition: bilingual('通过旧化质感、工装结构与运动文化元素形成有生活痕迹的粗粝感。', 'Workwear structure, athletic references, and worn-in texture create lived-in character.'),
     keywords: ['worn-in', 'workwear', 'athletic', 'rugged'], colors: ['烟草棕', '靛蓝', '奶油白', '军绿'],
     silhouettes: bilingual(['短宽上装', '高腰直筒', '明确肩部'], ['Cropped-wide top', 'High-rise straight', 'Defined shoulder']),
@@ -38,7 +40,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['先选一件旧化单品', '其余保持干净', '控制配饰数量'], ['Choose one worn piece', 'Keep the rest clean', 'Limit accessories']),
   },
   {
-    id: 'quietLuxury', name: 'Quiet Luxury', chineseName: '静奢质感', tone: '#d6c9ad',
+    id: 'quietLuxury', name: 'Quiet Luxury', chineseName: '静奢质感', tone: '#d6c9ad', imageRef: styleAsset('quietLuxury'),
     definition: bilingual('通过材质、比例和低可见度细节建立长期质感，不依赖标识和短期潮流。', 'Material, proportion, and low-visibility detail create longevity without logos or trend signals.'),
     keywords: ['refined', 'timeless', 'material', 'restrained'], colors: ['象牙白', '驼色', '深棕', '海军蓝'],
     silhouettes: bilingual(['流畅垂坠', '轻结构肩', '修长比例'], ['Fluid drape', 'Soft structure', 'Elongated line']),
@@ -50,7 +52,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['升级贴近面部的材质', '选择耐穿中性色', '减少可见装饰'], ['Upgrade face-adjacent material', 'Choose durable neutrals', 'Reduce visible decoration']),
   },
   {
-    id: 'oldMoney', name: 'Old Money', chineseName: '学院经典', tone: '#adc4d1',
+    id: 'oldMoney', name: 'Old Money', chineseName: '学院经典', tone: '#adc4d1', imageRef: styleAsset('oldMoney'),
     definition: bilingual('从传统学院、休闲运动与经典剪裁中提取稳定秩序，强调端正而非炫耀。', 'Classic tailoring, collegiate codes, and leisure sport references with composed restraint.'),
     keywords: ['classic', 'collegiate', 'polished', 'heritage'], colors: ['海军蓝', '奶油白', '酒红', '森林绿'],
     silhouettes: bilingual(['合体肩线', '中高腰', '经典直筒'], ['Neat shoulder', 'Mid-high rise', 'Classic straight']),
@@ -62,7 +64,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['一件学院单品即可', '优先海军蓝', '保持鞋履简洁'], ['Use one collegiate cue', 'Start with navy', 'Keep footwear simple']),
   },
   {
-    id: 'gorpcore', name: 'Gorpcore', chineseName: '户外机能', tone: '#a9c760',
+    id: 'gorpcore', name: 'Gorpcore', chineseName: '户外机能', tone: '#a9c760', imageRef: styleAsset('gorpcore'),
     definition: bilingual('把户外功能、模块化结构和城市生活结合，重点是功能真实而非装备堆砌。', 'Outdoor utility and modular construction adapted for real urban movement.'),
     keywords: ['utility', 'technical', 'modular', 'outdoor'], colors: ['岩石灰', '苔藓绿', '黑色', '安全橙'],
     silhouettes: bilingual(['可调节轮廓', '上短下直', '功能分区'], ['Adjustable volume', 'Short-over-straight', 'Functional zones']),
@@ -74,7 +76,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['先解决防风或收纳', '全身只保留一个亮色', '城市鞋型优先'], ['Solve one real function', 'Use one bright accent', 'Prefer urban footwear']),
   },
   {
-    id: 'streetwear', name: 'Streetwear', chineseName: '街头表达', tone: '#c7a9f7',
+    id: 'streetwear', name: 'Streetwear', chineseName: '街头表达', tone: '#c7a9f7', imageRef: styleAsset('streetwear'),
     definition: bilingual('以比例变化、青年文化和明确视觉焦点表达态度，关键是主次关系。', 'Proportion shifts and youth-culture references create expression through a clear visual hierarchy.'),
     keywords: ['expressive', 'oversized', 'graphic', 'youth'], colors: ['黑色', '水泥灰', '电光蓝', '冷白'],
     silhouettes: bilingual(['宽松上身', '低重心', '夸张比例'], ['Oversized upper', 'Low center', 'Exaggerated proportion']),
@@ -86,7 +88,7 @@ export const styleCatalog = Object.freeze([
     beginner: bilingual(['只设一个焦点', '先调整比例', '再增加图案'], ['Set one focal point', 'Fix proportion first', 'Add graphics later']),
   },
   {
-    id: 'koreanMinimal', name: 'Korean Minimal', chineseName: '韩系极简', tone: '#e8d4dc',
+    id: 'koreanMinimal', name: 'Korean Minimal', chineseName: '韩系极简', tone: '#e8d4dc', imageRef: styleAsset('koreanMinimal'),
     definition: bilingual('以柔和色彩、修长线条和轻精致感塑造上镜且容易复制的日常造型。', 'Soft color, elongated lines, and light polish create camera-friendly daily outfits.'),
     keywords: ['soft', 'elongated', 'polished', 'tonal'], colors: ['雾灰', '奶油白', '浅卡其', '炭黑'],
     silhouettes: bilingual(['长线条', '轻落肩', '高腰直筒'], ['Long line', 'Soft drop shoulder', 'High-rise straight']),

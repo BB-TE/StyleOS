@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title">
+  <title id="title">Streetwear editorial outfit illustration</title>
+  <defs><radialGradient id="light" cx="72%" cy="26%" r="76%"><stop stop-color="#c7a9f7" stop-opacity=".34"/><stop offset="1" stop-color="#09080b" stop-opacity="0"/></radialGradient><linearGradient id="hoodie"><stop stop-color="#3e3a47"/><stop offset="1" stop-color="#15131a"/></linearGradient><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern></defs>
+  <rect width="640" height="800" fill="#09080b"/><rect width="640" height="800" fill="url(#grid)"/><rect width="640" height="800" fill="url(#light)"/>
+  <ellipse cx="320" cy="744" rx="205" ry="28" fill="#000" opacity=".6"/><circle cx="320" cy="137" r="42" fill="#bca08e"/>
+  <path d="M195 225Q320 166 445 225L419 468H221Z" fill="url(#hoodie)"/><path d="M218 231L135 442L202 466L274 275Z" fill="#27242e"/><path d="M422 231L505 442L438 466L366 275Z" fill="#18161e"/>
+  <path d="M265 468H322L293 718H186Z" fill="#3b4249"/><path d="M322 468H382L454 718H345Z" fill="#272d33"/>
+  <path d="M267 218Q320 284 373 218" fill="#101015"/><rect x="274" y="332" width="92" height="56" rx="12" fill="#c7a9f7" opacity=".25"/><path d="M294 360H346" stroke="#e9e4f2" stroke-width="4"/>
+  <path d="M173 718H298V746H146Q150 729 173 718Z" fill="#e3e2e0"/><path d="M345 718H463Q486 728 488 746H345Z" fill="#c7c8cb"/>
+</svg>

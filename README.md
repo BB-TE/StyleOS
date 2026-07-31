@@ -89,9 +89,12 @@ URL follows this format:
 https://<github-user>.github.io/<repository-name>/
 ```
 
-The Express backend is not deployed by GitHub Pages. To connect a hosted API
-later, deploy the backend separately and replace local demo mode with a
-production `VITE_API_BASE_URL`.
+GitHub Pages cannot run the Express backend. The repository therefore includes
+`render.yaml` for a separate Render web service. After the Blueprint is
+deployed, set the GitHub repository Actions variable `VITE_API_BASE_URL` to the
+service URL (for example `https://styleos-api-bb-te.onrender.com`) and rerun the
+Pages workflow. If that variable is absent, the site deliberately stays in
+Local Demo Mode instead of attempting to call `localhost`.
 
 ## Privacy boundary
 

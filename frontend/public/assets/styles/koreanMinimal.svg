@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title">
+  <title id="title">Korean Minimal editorial outfit illustration</title>
+  <defs><radialGradient id="light" cx="34%" cy="23%" r="76%"><stop stop-color="#e8d4dc" stop-opacity=".34"/><stop offset="1" stop-color="#0b090a" stop-opacity="0"/></radialGradient><linearGradient id="coat"><stop stop-color="#d5c7c2"/><stop offset=".5" stop-color="#9b8f8a"/><stop offset="1" stop-color="#615b59"/></linearGradient><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".04"/></pattern></defs>
+  <rect width="640" height="800" fill="#0b090a"/><rect width="640" height="800" fill="url(#grid)"/><rect width="640" height="800" fill="url(#light)"/>
+  <ellipse cx="320" cy="744" rx="178" ry="25" fill="#000" opacity=".56"/><circle cx="320" cy="135" r="41" fill="#c3a995"/>
+  <path d="M244 203Q320 174 396 203L411 558H229Z" fill="url(#coat)"/><path d="M244 215L180 482L228 499L280 254Z" fill="#aca09b"/><path d="M396 215L460 482L412 499L360 254Z" fill="#756d69"/>
+  <path d="M283 203H357L350 443H290Z" fill="#eee8e1"/><path d="M259 558H321L303 718H230Z" fill="#6b6867"/><path d="M321 558H382L410 718H338Z" fill="#555354"/>
+  <path d="M287 202L320 270L353 202" fill="none" stroke="#f4ece7" stroke-width="3"/><path d="M320 270V551" stroke="#d8cbc5" stroke-opacity=".6" stroke-width="2"/>
+  <path d="M222 718H306V743H205Q206 728 222 718Z" fill="#dfdad4"/><path d="M338 718H416Q435 727 436 743H338Z" fill="#d0cbc7"/>
+</svg>

@@ -45,10 +45,9 @@ export function StyleLibrary() {
       {filtered.length ? <section className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {filtered.map((style, index) => (
           <article key={style.id} className="group overflow-hidden rounded-3xl border border-white/10 bg-surface transition-all hover:-translate-y-1 hover:border-white/20">
-            <button type="button" className="relative block h-48 w-full overflow-hidden text-left system-grid" onClick={() => setSelected(style)}>
-              <div className="absolute inset-0 opacity-60" style={{ background: `radial-gradient(circle at 62% 38%, ${style.tone}70, transparent 34%)` }} />
-              <div className="absolute left-[38%] top-[22%] h-[64%] w-[22%] -rotate-6 rounded-[48%_48%_12%_12%] bg-gradient-to-br from-white/25 to-black/90" />
-              <div className="absolute left-[55%] top-[30%] h-[56%] w-[23%] rotate-6 rounded-[48%_48%_12%_12%] bg-gradient-to-bl from-white/15 to-black/90" />
+            <button type="button" className="relative block h-64 w-full overflow-hidden bg-black text-left" onClick={() => setSelected(style)}>
+              <img src={style.imageRef} alt={`${style.name} ${style.chineseName}`} className="h-full w-full object-cover object-[center_38%] transition duration-500 group-hover:scale-[1.025]" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
               <span className="absolute left-5 top-5 font-mono text-[8px] tracking-[.16em] text-acid">0{index + 1} / 08</span>
             </button>
             <div className="p-5"><div className="flex items-start justify-between gap-3"><div><h2 className="font-display text-2xl tracking-[-.03em]">{style.name}</h2><p className="mt-1 text-xs text-stone">{style.chineseName}</p></div><button type="button" onClick={() => toggleFavorite(style)} className={`flex h-9 w-9 items-center justify-center rounded-full border ${favorites.has(style.id) ? 'border-acid bg-acid text-paper' : 'border-white/10 text-stone'}`} aria-label={t('tools.common.favorite')}><Bookmark size={14} fill={favorites.has(style.id) ? 'currentColor' : 'none'} /></button></div><p className="mt-5 line-clamp-3 text-xs leading-6 text-stone">{localize(style.definition, language)}</p><button type="button" onClick={() => setSelected(style)} className="button-copy mt-6 inline-flex items-center gap-2 text-acid">{t('tools.library.open')} <ArrowUpRight size={14} /></button></div>
@@ -59,6 +58,7 @@ export function StyleLibrary() {
       {selected ? <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/70 backdrop-blur-sm" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null) }}>
         <aside className="h-full w-full max-w-3xl overflow-y-auto border-l border-white/10 bg-paper p-6 sm:p-10">
           <div className="flex items-start justify-between gap-5 border-b border-white/10 pb-8"><div><p className="signal-label text-acid">STYLE PROFILE / {selected.id.toUpperCase()}</p><h2 className="mt-5 font-display text-5xl tracking-[-.05em]">{selected.name}</h2><p className="mt-2 text-stone">{selected.chineseName}</p></div><button type="button" onClick={() => setSelected(null)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10"><X size={17} /></button></div>
+          <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-black"><img src={selected.imageRef} alt={`${selected.name} ${selected.chineseName}`} className="max-h-[34rem] w-full object-cover object-[center_35%]" /></div>
           <p className="py-8 text-lg leading-8 text-stone">{localize(selected.definition, language)}</p>
           <div className="grid gap-3 sm:grid-cols-2">
             <InfoBlock label={t('tools.library.colors')}><div className="flex flex-wrap gap-2">{selected.colors.map((color) => <span key={color} className="rounded-full border border-white/10 px-3 py-1 text-xs">{color}</span>)}</div></InfoBlock>

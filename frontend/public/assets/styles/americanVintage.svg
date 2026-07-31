@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title">
+  <title id="title">American Vintage editorial outfit illustration</title>
+  <defs><radialGradient id="light" cx="72%" cy="26%" r="74%"><stop stop-color="#d38b5d" stop-opacity=".34"/><stop offset="1" stop-color="#0d0a08" stop-opacity="0"/></radialGradient><linearGradient id="denim"><stop stop-color="#526f82"/><stop offset=".5" stop-color="#263f50"/><stop offset="1" stop-color="#12242e"/></linearGradient><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".04"/></pattern></defs>
+  <rect width="640" height="800" fill="#0c0a08"/><rect width="640" height="800" fill="url(#grid)"/><rect width="640" height="800" fill="url(#light)"/>
+  <ellipse cx="322" cy="744" rx="180" ry="28" fill="#000" opacity=".6"/><circle cx="320" cy="137" r="43" fill="#bd9c86"/>
+  <path d="M230 210Q320 174 410 210L397 424H242Z" fill="url(#denim)"/><path d="M242 220L176 399L225 419L278 258Z" fill="#2c4b5d"/><path d="M398 220L460 399L415 420L362 258Z" fill="#19384b"/>
+  <path d="M277 209H363L349 390H291Z" fill="#e7dec9"/><path d="M257 424H322L303 716H217Z" fill="#775a3e"/><path d="M322 424H385L421 716H335Z" fill="#5c422e"/>
+  <path d="M244 244L303 292L320 214L337 292L397 244" fill="none" stroke="#9fb0b6" stroke-width="3"/><path d="M282 327H358" stroke="#9fb0b6" stroke-width="3"/>
+  <path d="M207 716H306V744H185Q188 727 207 716Z" fill="#ddd2bd"/><path d="M335 716H428Q447 727 448 744H335Z" fill="#cbbca3"/>
+</svg>

@@ -17,5 +17,5 @@ export const outfitExamples = Object.freeze(styleTaxonomy.flatMap((style) => sce
   keywords: style.keywords,
   whyItWorks: `One ${style.name} anchor controls the outfit while the remaining pieces support real ${scene} use.`,
   whatToAvoid: style.avoidItems[0],
-  imageRef: `/assets/outfits/${style.id}-${scene}.webp`,
+  imageRef: `/assets/styles/${style.id}.svg`,
 }))))

@@ -9,7 +9,10 @@ export const app = express()
 app.disable('x-powered-by')
 app.use(
   cors({
-    origin: config.clientOrigin,
+    origin(origin, callback) {
+      if (!origin || config.clientOrigins.includes(origin)) return callback(null, true)
+      return callback(new Error(`Origin ${origin} is not allowed by StyleOS CORS.`))
+    },
     methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   }),
 )
@@ -34,7 +37,7 @@ app.use((error, _request, response, _next) => {
 })
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(config.port, () => {
+  app.listen(config.port, '0.0.0.0', () => {
     console.log(`StyleOS API listening on http://localhost:${config.port}`)
   })
 }

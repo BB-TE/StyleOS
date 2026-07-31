@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title">
+  <title id="title">Gorpcore editorial outfit illustration</title>
+  <defs><radialGradient id="light" cx="30%" cy="25%" r="78%"><stop stop-color="#a9c760" stop-opacity=".38"/><stop offset="1" stop-color="#080a08" stop-opacity="0"/></radialGradient><linearGradient id="shell"><stop stop-color="#71804f"/><stop offset=".55" stop-color="#303a2d"/><stop offset="1" stop-color="#151b17"/></linearGradient><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern></defs>
+  <rect width="640" height="800" fill="#080a08"/><rect width="640" height="800" fill="url(#grid)"/><rect width="640" height="800" fill="url(#light)"/>
+  <ellipse cx="320" cy="744" rx="190" ry="27" fill="#000" opacity=".6"/><circle cx="320" cy="136" r="42" fill="#ae9b89"/>
+  <path d="M222 214Q320 174 418 214L400 445H239Z" fill="url(#shell)"/><path d="M238 224L161 420L218 444L278 270Z" fill="#43503c"/><path d="M402 224L479 420L422 444L362 270Z" fill="#263329"/>
+  <path d="M261 445H321L300 716H208Z" fill="#252b2a"/><path d="M321 445H383L432 716H339Z" fill="#161d1c"/>
+  <path d="M320 210V445M260 325H380" stroke="#ccef42" stroke-width="5"/><path d="M254 350H303V407H254ZM337 350H386V407H337Z" fill="#101512" stroke="#778869"/>
+  <path d="M198 716H304V744H174Q179 727 198 716Z" fill="#323b35"/><path d="M339 716H444Q466 726 467 744H339Z" fill="#28322c"/>
+</svg>

@@ -5,7 +5,9 @@ const parsePort = (value, fallback) => {
 
 export const config = Object.freeze({
   port: parsePort(process.env.PORT, 3001),
-  clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  clientOrigins: (process.env.CLIENT_ORIGINS || process.env.CLIENT_ORIGIN || 'http://localhost:5173')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
   environment: process.env.NODE_ENV || 'development',
 })
-

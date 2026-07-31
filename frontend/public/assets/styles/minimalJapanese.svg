@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title">
+  <title id="title">Minimal Japanese editorial outfit illustration</title>
+  <defs><radialGradient id="light" cx="32%" cy="28%" r="75%"><stop stop-color="#9eae8d" stop-opacity=".34"/><stop offset="1" stop-color="#0a0b09" stop-opacity="0"/></radialGradient><linearGradient id="top"><stop stop-color="#ded5c1"/><stop offset="1" stop-color="#8d8a78"/></linearGradient><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".04"/></pattern></defs>
+  <rect width="640" height="800" fill="#0a0b09"/><rect width="640" height="800" fill="url(#grid)"/><rect width="640" height="800" fill="url(#light)"/>
+  <ellipse cx="310" cy="744" rx="194" ry="27" fill="#000" opacity=".55"/><circle cx="313" cy="138" r="42" fill="#bda999"/>
+  <path d="M209 221Q312 176 415 221L399 472H225Z" fill="url(#top)"/><path d="M226 230L151 437L210 453L274 278Z" fill="#b8b29d"/><path d="M398 232L467 424L410 449L354 278Z" fill="#7b7f6c"/>
+  <path d="M244 472H321L301 720H202Z" fill="#5d604f"/><path d="M321 472H391L425 720H330Z" fill="#696b58"/>
+  <path d="M261 219Q311 257 365 219L350 295H274Z" fill="#ece5d6" opacity=".72"/>
+  <path d="M196 720H303V744H178Q181 729 196 720Z" fill="#bcb6a3"/><path d="M330 720H432Q450 729 451 744H330Z" fill="#c7c2b1"/>
+</svg>

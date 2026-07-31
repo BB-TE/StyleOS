@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-labelledby="title">
+  <title id="title">Old Money editorial outfit illustration</title>
+  <defs><radialGradient id="light" cx="70%" cy="23%" r="75%"><stop stop-color="#adc4d1" stop-opacity=".31"/><stop offset="1" stop-color="#090b0d" stop-opacity="0"/></radialGradient><linearGradient id="navy"><stop stop-color="#354a5f"/><stop offset="1" stop-color="#111c2a"/></linearGradient><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".04"/></pattern></defs>
+  <rect width="640" height="800" fill="#090b0d"/><rect width="640" height="800" fill="url(#grid)"/><rect width="640" height="800" fill="url(#light)"/>
+  <ellipse cx="319" cy="744" rx="178" ry="25" fill="#000" opacity=".58"/><circle cx="319" cy="136" r="42" fill="#c0a58e"/>
+  <path d="M238 205Q319 174 400 205L392 438H246Z" fill="url(#navy)"/><path d="M246 217L183 418L230 432L279 253Z" fill="#233449"/><path d="M392 217L452 418L407 432L360 253Z" fill="#162536"/>
+  <path d="M284 203H354L346 414H292Z" fill="#eee8d8"/><path d="M319 224L347 290L319 308L291 290Z" fill="#73333d"/>
+  <path d="M257 438H321L305 717H226Z" fill="#b8ad93"/><path d="M321 438H385L414 717H335Z" fill="#9c927c"/>
+  <path d="M219 717H308V743H201Q202 728 219 717Z" fill="#4a3229"/><path d="M335 717H421Q439 727 440 743H335Z" fill="#3d2922"/>
+</svg>
