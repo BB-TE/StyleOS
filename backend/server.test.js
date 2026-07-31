@@ -74,3 +74,14 @@ test('V2 purchase analysis reads memory and wardrobe evidence', async () => {
   assert.equal(body.memorySnapshot.wardrobeCount, 3)
   assert.ok(body.gates.some((gate) => gate.code === 'duplicateHardStop'))
 })
+
+test('support endpoint validates and accepts a customer request', async () => {
+  const invalid = await fetch(`${baseUrl}/api/support`, { method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ category:'other', message:'short' }) })
+  assert.equal(invalid.status, 400)
+
+  const response = await fetch(`${baseUrl}/api/support`, { method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ category:'feature', message:'The purchase result panel is difficult to understand.' }) })
+  const body = await response.json()
+  assert.equal(response.status, 201)
+  assert.equal(body.ok, true)
+  assert.match(body.id, /^support-/)
+})

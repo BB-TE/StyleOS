@@ -33,3 +33,22 @@ decisionRouter.post('/feedback', (request, response) => {
   if (!request.body?.reportId || !request.body?.rating) return response.status(400).json({ error: 'invalid_input', message: 'reportId and rating are required.' })
   response.status(201).json({ ok: true, id: `feedback-${request.body.reportId}-${Date.now()}`, saved: 'mock' })
 })
+
+decisionRouter.post('/support', (request, response) => {
+  const categories = new Set(['feature', 'decision', 'privacy', 'image', 'other'])
+  const category = request.body?.category
+  const message = typeof request.body?.message === 'string' ? request.body.message.trim() : ''
+
+  if (!categories.has(category) || message.length < 10 || message.length > 1200) {
+    return response.status(400).json({
+      error: 'invalid_input',
+      message: 'A valid category and a message between 10 and 1200 characters are required.',
+    })
+  }
+
+  response.status(201).json({
+    ok: true,
+    id: `support-${Date.now()}`,
+    saved: 'mock',
+  })
+})

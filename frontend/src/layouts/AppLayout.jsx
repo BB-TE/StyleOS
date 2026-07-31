@@ -2,6 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Header } from '../components/Header.jsx'
 import { OnboardingGuide } from '../components/OnboardingGuide.jsx'
 import { ScrollToTop } from '../components/ScrollToTop.jsx'
+import { SupportCenter } from '../components/SupportCenter.jsx'
 
 export function AppLayout() {
   const location = useLocation()
@@ -15,6 +16,7 @@ export function AppLayout() {
       <div className={isHome ? 'bg-paper' : 'workspace-surface'}>
         <Outlet />
       </div>
+      <SupportCenter />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { styleCatalog } from '../data/styleCatalog.js'
 import { analyzeColorLocal, analyzePurchaseLocal } from './localEngines.js'
 import { generateLocalStyleReport } from './localStyleReport.js'
 import { analyzePurchaseWithMemory } from '../domain/decisionEngine.js'
+import { saveLocalSupportRequest } from './supportStore.js'
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
 const LOCAL_DEMO_ONLY = import.meta.env.VITE_LOCAL_DEMO_ONLY === 'true'
@@ -54,4 +55,9 @@ export const getStyleLibrary = () => withFallback(
 export const submitFeedback = (feedback) => withFallback(
   () => request('/api/feedback', { method: 'POST', body: JSON.stringify(feedback) }),
   () => ({ ok: true, id: `local-feedback-${Date.now()}` }),
+)
+
+export const submitSupportRequest = (supportInput) => withFallback(
+  () => request('/api/support', { method: 'POST', body: JSON.stringify(supportInput) }),
+  () => saveLocalSupportRequest(supportInput),
 )
