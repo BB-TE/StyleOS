@@ -30,7 +30,9 @@ Legacy `/analysis`, `/report`, and `/history` links redirect to their V2 equival
 
 - Frontend: React, Vite, Tailwind CSS, Framer Motion, Lucide React
 - Backend: Node.js, Express, CORS
-- V1 persistence: browser `localStorage`; feedback uses backend local JSON
+- Offline persistence: browser `localStorage`
+- Development sync: normalized state snapshots in a backend JSON file
+- Production persistence contract: Supabase/PostgreSQL schema with row-level security
 - Frontend: `http://localhost:5173`
 - Backend: `http://localhost:3001`
 
@@ -40,8 +42,11 @@ Important frontend modules:
 - `frontend/src/domain/memoryEngine.js` — evidence updates and confidence changes
 - `frontend/src/domain/decisionEngine.js` — local deterministic purchase judgment
 - `frontend/src/domain/productStore.js` — persistence, migration, and decision lifecycle
+- `frontend/src/contexts/DataSyncProvider.jsx` — local-first hydration and debounced sync
+- `backend/routes/memory.js` — owner-scoped memory, wardrobe, decision, and outcome endpoints
+- `backend/data/styleos-schema.sql` — production database contract
 
-The matching backend engine is `backend/engines/memoryDecisionEngine.js`, exposed at `POST /api/analyze-purchase-v2`. When the backend is unavailable, the frontend runs the same decision locally and visibly shows Local Demo Mode.
+The matching backend engine is `backend/engines/memoryDecisionEngine.js`, exposed at `POST /api/analyze-purchase-v2`. The owner-scoped `POST /api/memory/decision-check` endpoint reads the stored revision, analyzes the candidate, and saves the resulting decision atomically. Purchase results now include wardrobe-based outfit drafts, estimated use value, and concrete next actions; numeric scores remain a secondary evidence view. The browser runs the same decision locally by default. Remote memory analysis and background text sync are separate opt-in feature flags, and sync does not begin until the user explicitly chooses it in the privacy guide. In local development, the sync API uses an anonymous device owner ID and a revisioned file repository; this is for development continuity, not production identity or cross-device security.
 
 ## Local development
 
@@ -96,6 +101,12 @@ service URL (for example `https://styleos-api-bb-te.onrender.com`) and rerun the
 Pages workflow. If that variable is absent, the site deliberately stays in
 Local Demo Mode instead of attempting to call `localhost`.
 
+Do not treat the Render file repository as durable production storage: instances
+may replace or discard their local filesystem. The production server disables
+the unauthenticated file-memory routes by default, and the Pages workflow leaves
+both memory-sync flags off. Keep the public demo in Local Demo Mode until a
+Supabase repository and authenticated user ownership have been connected.
+
 ## Privacy boundary
 
-Photos in the current version are previewed locally in the browser and are not uploaded to the backend. No API key is stored in the frontend. Future image analysis must add explicit consent, retention details, deletion controls, format and size limits, and metadata removal.
+Photos in the current version are previewed locally in the browser and are not uploaded to the backend. Text memory also stays local unless the user explicitly opts into the development sync; that choice can be revoked and the backend text copy can be deleted from the privacy guide. No API key is stored in the frontend. Future image analysis must add separate explicit consent, retention details, deletion controls, format and size limits, and metadata removal.

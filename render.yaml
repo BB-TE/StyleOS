@@ -14,3 +14,7 @@ services:
         value: production
       - key: CLIENT_ORIGINS
         value: https://bb-te.github.io,http://localhost:5173
+      - key: PERSISTENCE_MODE
+        value: file
+      - key: ENABLE_UNAUTHENTICATED_MEMORY_SYNC
+        value: "false"

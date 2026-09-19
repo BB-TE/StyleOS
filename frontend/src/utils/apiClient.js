@@ -3,9 +3,11 @@ import { analyzeColorLocal, analyzePurchaseLocal } from './localEngines.js'
 import { generateLocalStyleReport } from './localStyleReport.js'
 import { analyzePurchaseWithMemory } from '../domain/decisionEngine.js'
 import { saveLocalSupportRequest } from './supportStore.js'
+import { hasMemorySyncConsent } from './memorySyncClient.js'
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
 const LOCAL_DEMO_ONLY = import.meta.env.VITE_LOCAL_DEMO_ONLY === 'true'
+const REMOTE_MEMORY_ANALYSIS_ENABLED = import.meta.env.VITE_REMOTE_MEMORY_ANALYSIS_ENABLED === 'true'
 
 async function request(path, options = {}) {
   const controller = new AbortController()
@@ -37,10 +39,15 @@ export const analyzePurchase = (purchaseInput, userProfileOrReport) => withFallb
   () => analyzePurchaseLocal(purchaseInput, userProfileOrReport),
 )
 
-export const analyzePurchaseV2 = (product, memory, wardrobe) => withFallback(
-  () => request('/api/analyze-purchase-v2', { method: 'POST', body: JSON.stringify({ product, memory, wardrobe }) }),
-  () => analyzePurchaseWithMemory(product, memory, wardrobe),
-)
+export const analyzePurchaseV2 = (product, memory, wardrobe) => {
+  if (!REMOTE_MEMORY_ANALYSIS_ENABLED || !hasMemorySyncConsent()) {
+    return Promise.resolve({ data: analyzePurchaseWithMemory(product, memory, wardrobe), mode: 'local' })
+  }
+  return withFallback(
+    () => request('/api/analyze-purchase-v2', { method: 'POST', body: JSON.stringify({ product, memory, wardrobe }) }),
+    () => analyzePurchaseWithMemory(product, memory, wardrobe),
+  )
+}
 
 export const analyzeColor = (input) => withFallback(
   () => request('/api/analyze-color', { method: 'POST', body: JSON.stringify(input) }),

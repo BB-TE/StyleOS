@@ -1,31 +1,32 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowLeft, ArrowRight, Check, Database, RefreshCcw, ShieldCheck, ShoppingBag, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, Cloud, Database, HardDrive, RefreshCcw, ShieldCheck, ShoppingBag, Trash2, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useI18n } from '../hooks/useI18n.js'
 import { track } from '../utils/analytics.js'
 import { OPEN_GUIDE_EVENT } from '../utils/guideEvents.js'
+import { deleteMemoryState, getMemorySyncConsent, memorySyncAvailable, setMemorySyncConsent } from '../utils/memorySyncClient.js'
 
-const ONBOARDING_KEY = 'styleos.v2.onboardingCompleted'
-const PRIVACY_KEY = 'styleos.v2.privacyAcknowledgement'
+const ONBOARDING_KEY = 'styleos.v4.onboardingCompleted'
 
 function hasCompletedOnboarding() {
   try { return localStorage.getItem(ONBOARDING_KEY) === 'true' } catch { return false }
-}
-
-function hasPrivacyAcknowledgement() {
-  try { return Boolean(localStorage.getItem(PRIVACY_KEY)) } catch { return false }
 }
 
 export function OnboardingGuide() {
   const { t } = useI18n()
   const [open, setOpen] = useState(() => !hasCompletedOnboarding())
   const [step, setStep] = useState(0)
-  const [acknowledged, setAcknowledged] = useState(() => hasPrivacyAcknowledgement())
+  const [syncChoice, setSyncChoice] = useState(getMemorySyncConsent)
+  const [deleteConfirm, setDeleteConfirm] = useState(false)
+  const [deleteStatus, setDeleteStatus] = useState('')
+  const syncAvailable = memorySyncAvailable()
 
   useEffect(() => {
     const showGuide = () => {
       setStep(0)
-      setAcknowledged(hasPrivacyAcknowledgement())
+      setSyncChoice(getMemorySyncConsent())
+      setDeleteConfirm(false)
+      setDeleteStatus('')
       setOpen(true)
       track('tutorial_opened', { source: 'header' })
     }
@@ -53,14 +54,30 @@ export function OnboardingGuide() {
   }
 
   const finish = () => {
-    if (!acknowledged) return
+    const syncEnabled = syncAvailable && syncChoice
+    setMemorySyncConsent(syncEnabled)
     try {
       localStorage.setItem(ONBOARDING_KEY, 'true')
-      localStorage.setItem(PRIVACY_KEY, JSON.stringify({ version: 1, acknowledgedAt: new Date().toISOString(), scope: 'local-v1' }))
     } catch { /* The guide can still close if browser storage is unavailable. */ }
-    track('privacy_acknowledged', { version: 1, scope: 'local-v1' })
-    track('tutorial_completed', { version: 1 })
+    track('memory_sync_choice_saved', { enabled: syncEnabled, scope: 'text-memory-no-images' })
+    track('tutorial_completed', { version: 3 })
     setOpen(false)
+  }
+
+  const deleteRemoteCopy = async () => {
+    if (!deleteConfirm) { setDeleteConfirm(true); return }
+    setDeleteStatus('deleting')
+    try {
+      await deleteMemoryState()
+      setMemorySyncConsent(false)
+      setSyncChoice(false)
+      setDeleteStatus('deleted')
+      setDeleteConfirm(false)
+      track('remote_memory_deleted')
+    } catch {
+      setDeleteStatus('failed')
+      setDeleteConfirm(false)
+    }
   }
 
   const steps = [
@@ -113,16 +130,18 @@ export function OnboardingGuide() {
                         </article>
                       ))}
                     </div>
-                    <label className={`mt-5 flex cursor-pointer gap-3 rounded-2xl border p-4 text-xs leading-6 transition-colors ${acknowledged ? 'border-acid/35 bg-acid/[.04]' : 'border-white/10 bg-white/[.02]'}`}>
-                      <input type="checkbox" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[#d9ff43]" />
-                      <span>{t('onboarding.acknowledge')}</span>
-                    </label>
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label={t('onboarding.storageChoice')}>
+                      <button type="button" role="radio" aria-checked={!syncChoice} onClick={() => setSyncChoice(false)} className={`rounded-2xl border p-4 text-left transition-colors ${!syncChoice ? 'border-acid/35 bg-acid/[.04]' : 'border-white/10 bg-white/[.02]'}`}><HardDrive size={17} className="text-acid" /><strong className="mt-3 block text-sm">{t('onboarding.localChoiceTitle')}</strong><span className="mt-2 block text-xs leading-6 text-stone">{t('onboarding.localChoiceBody')}</span></button>
+                      <button type="button" role="radio" aria-checked={syncChoice} disabled={!syncAvailable} onClick={() => setSyncChoice(true)} className={`rounded-2xl border p-4 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${syncChoice ? 'border-acid/35 bg-acid/[.04]' : 'border-white/10 bg-white/[.02]'}`}><Cloud size={17} className="text-acid" /><strong className="mt-3 block text-sm">{t('onboarding.syncChoiceTitle')}</strong><span className="mt-2 block text-xs leading-6 text-stone">{syncAvailable ? t('onboarding.syncChoiceBody') : t('onboarding.syncUnavailable')}</span></button>
+                    </div>
+                    <p className="mt-4 text-xs leading-6 text-stone">{t('onboarding.choiceNote')}</p>
+                    {syncAvailable ? <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4"><button type="button" disabled={deleteStatus === 'deleting'} onClick={deleteRemoteCopy} className={`button-copy inline-flex min-h-10 items-center gap-2 rounded-full border px-4 text-xs disabled:opacity-40 ${deleteConfirm ? 'border-danger/40 text-danger' : 'border-white/10 text-stone'}`}><Trash2 size={13} />{t(deleteConfirm ? 'onboarding.deleteRemoteConfirm' : 'onboarding.deleteRemote')}</button>{deleteStatus ? <span className={`text-xs ${deleteStatus === 'failed' ? 'text-danger' : 'text-stone'}`}>{t(`onboarding.deleteStatus.${deleteStatus}`)}</span> : null}</div> : null}
                   </div>
                 )}
 
                 <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-8">
                   {step === 1 ? <button type="button" onClick={() => setStep(0)} className="button-copy focus-ring inline-flex h-11 items-center gap-3 rounded-full border border-white/10 px-5 text-stone"><ArrowLeft size={14} />{t('onboarding.back')}</button> : <button type="button" onClick={() => setOpen(false)} className="button-copy focus-ring h-11 rounded-full px-2 text-stone hover:text-ink">{t('onboarding.later')}</button>}
-                  {step === 0 ? <button type="button" onClick={next} className="acid-button h-11 gap-4 px-6 text-[9px] uppercase tracking-[.12em]">{t('onboarding.next')}<ArrowRight size={14} /></button> : <button type="button" disabled={!acknowledged} onClick={finish} className="acid-button h-11 gap-4 px-6 text-[9px] uppercase tracking-[.12em] disabled:cursor-not-allowed disabled:opacity-35"><Check size={14} />{t('onboarding.start')}</button>}
+                  {step === 0 ? <button type="button" onClick={next} className="acid-button h-11 gap-4 px-6 text-[9px] uppercase tracking-[.12em]">{t('onboarding.next')}<ArrowRight size={14} /></button> : <button type="button" onClick={finish} className="acid-button h-11 gap-4 px-6 text-[9px] uppercase tracking-[.12em]"><Check size={14} />{t('onboarding.start')}</button>}
                 </div>
               </div>
             </div>

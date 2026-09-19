@@ -44,6 +44,8 @@ jobs:
           VITE_ROUTER_MODE: hash
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
           VITE_LOCAL_DEMO_ONLY: ${{ vars.VITE_API_BASE_URL == '' && 'true' || 'false' }}
+          VITE_MEMORY_SYNC_ENABLED: ${{ vars.VITE_MEMORY_SYNC_ENABLED == 'true' && 'true' || 'false' }}
+          VITE_REMOTE_MEMORY_ANALYSIS_ENABLED: ${{ vars.VITE_REMOTE_MEMORY_ANALYSIS_ENABLED == 'true' && 'true' || 'false' }}
         run: npm run build
 
       - name: Configure GitHub Pages

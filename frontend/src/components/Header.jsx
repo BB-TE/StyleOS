@@ -1,4 +1,4 @@
-import { CircleHelp, Menu, ScanLine } from 'lucide-react'
+import { CircleHelp, Cloud, CloudOff, Clock3, LoaderCircle, Menu, ScanLine, TriangleAlert } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useI18n } from '../hooks/useI18n.js'
@@ -6,6 +6,7 @@ import { primaryNavigation, routeById } from '../data/routes.js'
 import { LanguageSwitcher } from './LanguageSwitcher.jsx'
 import { MobileMenu } from './MobileMenu.jsx'
 import { openStyleOSGuide } from '../utils/guideEvents.js'
+import { useDataSync } from '../hooks/useDataSync.js'
 
 const navClassName = ({ isActive }) =>
   `nav-link ${isActive ? 'nav-link-active' : ''}`
@@ -14,6 +15,8 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
   const { t } = useI18n()
+  const { status, retry } = useDataSync()
+  const SyncIcon = status === 'synced' ? Cloud : status === 'connecting' || status === 'syncing' ? LoaderCircle : status === 'pending' ? Clock3 : status === 'conflict' ? TriangleAlert : CloudOff
 
   return (
     <>
@@ -38,6 +41,10 @@ export function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-2">
+            <button type="button" onClick={status === 'local' ? retry : status === 'conflict' ? openStyleOSGuide : undefined} className="focus-ring inline-flex h-10 w-10 items-center justify-center gap-2 rounded-full border border-white/10 font-mono text-[8px] uppercase tracking-[.1em] text-stone xl:w-auto xl:px-3" title={t(`sync.${status}`)} aria-label={t(`sync.${status}`)}>
+              <SyncIcon size={13} className={status === 'connecting' || status === 'syncing' ? 'animate-spin text-acid' : status === 'synced' ? 'text-acid' : status === 'conflict' ? 'text-danger' : status === 'pending' ? 'text-[#e8bd68]' : ''} />
+              <span className="hidden xl:inline">{t(`sync.${status}`)}</span>
+            </button>
             <button
               type="button"
               onClick={openStyleOSGuide}

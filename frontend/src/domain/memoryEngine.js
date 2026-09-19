@@ -10,6 +10,8 @@ export function upsertMemoryEvidence(memory, evidence, now = new Date().toISOStr
     next.records.push(memoryRecord({ ...evidence, id, updatedAt: now }))
   } else {
     const current = next.records[index]
+    const decisionSources = (evidence.sources || []).filter((source) => source.startsWith('decision:'))
+    if (decisionSources.some((source) => current.sources.includes(source))) return next
     const positive = evidence.direction !== 'negative'
     const delta = evidence.weight ?? .1
     next.records[index] = {
@@ -47,6 +49,50 @@ export function confirmMemoryRecord(memory, id, now = new Date().toISOString()) 
 
 export function removeMemoryRecord(memory, id, now = new Date().toISOString()) {
   return { ...memory, updatedAt: now, records: memory.records.filter((record) => record.id !== id) }
+}
+
+const setupManagedKinds = new Set(['styleAffinity', 'sceneNeed', 'avoidElement', 'monthlyBudget', 'successfulItem', 'returnReason'])
+
+function isSetupManagedRecord(record) {
+  const sources = Array.isArray(record.sources) ? record.sources : []
+  return setupManagedKinds.has(record.kind)
+    && sources.length > 0
+    && sources.every((source) => source === 'initial_setup' || source === 'user_statement')
+}
+
+export function mergeSetupMemory(existing, nextSetup, now = new Date().toISOString()) {
+  if (!existing?.records?.length) return { ...nextSetup, createdAt: existing?.createdAt || nextSetup.createdAt, updatedAt: now }
+  const records = new Map(existing.records.filter((record) => !isSetupManagedRecord(record)).map((record) => [record.id, record]))
+  nextSetup.records.forEach((record) => {
+    const historical = records.get(record.id)
+    records.set(record.id, historical
+      ? { ...historical, ...record, confidence: Math.max(historical.confidence, record.confidence), evidenceCount: Math.max(historical.evidenceCount, record.evidenceCount), sources: [...new Set([...(historical.sources || []), ...(record.sources || [])])], updatedAt: now }
+      : { ...record, updatedAt: now })
+  })
+  return {
+    ...existing,
+    version: nextSetup.version,
+    profile: nextSetup.profile,
+    records: [...records.values()],
+    createdAt: existing.createdAt || nextSetup.createdAt,
+    updatedAt: now,
+  }
+}
+
+export function retractDecisionEvidence(memory, decisionId, now = new Date().toISOString()) {
+  const source = `decision:${decisionId}`
+  const records = memory.records.flatMap((record) => {
+    if (!(record.sources || []).includes(source)) return [record]
+    if (record.evidenceCount <= 1) return []
+    return [{
+      ...record,
+      confidence: clamp(record.confidence - .1),
+      evidenceCount: record.evidenceCount - 1,
+      sources: record.sources.filter((item) => item !== source),
+      updatedAt: now,
+    }]
+  })
+  return { ...memory, records, updatedAt: now }
 }
 
 export function summarizeMemory(memory) {

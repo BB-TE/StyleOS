@@ -2,9 +2,9 @@ import { ArrowLeft, ArrowRight, Check, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { sceneOptions, styleOptions } from '../data/analysisOptions.js'
-import { upsertMemoryEvidence } from '../domain/memoryEngine.js'
+import { mergeSetupMemory, upsertMemoryEvidence } from '../domain/memoryEngine.js'
 import { seedMemoryFromProfile } from '../domain/memoryModel.js'
-import { saveMemory } from '../domain/productStore.js'
+import { getMemory, saveMemory } from '../domain/productStore.js'
 import { useI18n } from '../hooks/useI18n.js'
 import { track } from '../utils/analytics.js'
 
@@ -26,7 +26,7 @@ export function Analysis() {
   const update = (key, value) => setForm((current) => ({ ...current, [key]: value }))
   const toggle = (key, value) => update(key, form[key].includes(value) ? form[key].filter((item) => item !== value) : [...form[key], value])
   const valid = step === 0 ? form.styles.length > 0 : step === 1 ? form.scenes.length > 0 && Number(form.monthlyBudget) > 0 : Boolean(form.successfulItem.trim() || form.failureReason.trim())
-  const next = () => { if (!valid) { setError(t(step === 2 ? 'memoryV2.setup.experienceRequired' : 'memoryV2.setup.required')); return } setError(''); track('analysis_step_complete', { version: 2, step: step + 1 }); if (step < 2) { setStep(step + 1); return } let memory = seedMemoryFromProfile({ styles: form.styles, scenes: form.scenes, monthlyBudget: form.monthlyBudget, expressionGoal: form.expressionGoal, dislikedElements: form.dislikedElements }); if (form.successfulItem.trim()) memory = upsertMemoryEvidence(memory, { domain: 'wardrobe', kind: 'successfulItem', value: form.successfulItem.trim(), label: form.successfulItem.trim(), confidence: .58, sources: ['user_statement'], confirmed: true }); if (form.failureReason.trim()) memory = upsertMemoryEvidence(memory, { domain: 'risk', kind: 'returnReason', value: form.failureReason.trim(), label: form.failureReason.trim(), confidence: .62, sources: ['user_statement'], confirmed: true }); saveMemory(memory); localStorage.removeItem(DRAFT_KEY); track('memory_setup_completed', { records: memory.records.length }); navigate('/today') }
+  const next = () => { if (!valid) { setError(t(step === 2 ? 'memoryV2.setup.experienceRequired' : 'memoryV2.setup.required')); return } setError(''); track('analysis_step_complete', { version: 2, step: step + 1 }); if (step < 2) { setStep(step + 1); return } let setupMemory = seedMemoryFromProfile({ styles: form.styles, scenes: form.scenes, monthlyBudget: form.monthlyBudget, expressionGoal: form.expressionGoal, dislikedElements: form.dislikedElements }); if (form.successfulItem.trim()) setupMemory = upsertMemoryEvidence(setupMemory, { domain: 'wardrobe', kind: 'successfulItem', value: form.successfulItem.trim(), label: form.successfulItem.trim(), confidence: .58, sources: ['user_statement'], confirmed: true }); if (form.failureReason.trim()) setupMemory = upsertMemoryEvidence(setupMemory, { domain: 'risk', kind: 'returnReason', value: form.failureReason.trim(), label: form.failureReason.trim(), confidence: .62, sources: ['user_statement'], confirmed: true }); const memory = mergeSetupMemory(getMemory(), setupMemory); saveMemory(memory); localStorage.removeItem(DRAFT_KEY); track('memory_setup_completed', { records: memory.records.length }); navigate('/today') }
 
   const titles = [t('memoryV2.setup.stepOne'), t('memoryV2.setup.stepTwo'), t('memoryV2.setup.stepThree')]
   return <main className="mx-auto max-w-[86rem] px-5 pb-24 pt-8 sm:px-8 sm:pt-12 lg:px-12">

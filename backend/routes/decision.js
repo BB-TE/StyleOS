@@ -7,6 +7,7 @@ import { analyzeColorCombination } from '../engines/colorEngine.js'
 import { analyzePurchaseDecision } from '../engines/purchaseEngine.js'
 import { analyzeStyleProfile } from '../engines/styleEngine.js'
 import { analyzeMemoryPurchase } from '../engines/memoryDecisionEngine.js'
+import { validateMemoryPurchaseProduct } from '../utils/purchaseValidation.js'
 
 export const decisionRouter = Router()
 
@@ -21,7 +22,8 @@ decisionRouter.post('/analyze-purchase', (request, response) => {
 })
 
 decisionRouter.post('/analyze-purchase-v2', (request, response) => {
-  if (!request.body?.product) return response.status(400).json({ error: 'invalid_input', message: 'product is required.' })
+  const validationError = validateMemoryPurchaseProduct(request.body?.product)
+  if (validationError) return response.status(400).json({ error: 'invalid_input', message: validationError })
   response.json(analyzeMemoryPurchase(request.body.product, request.body.memory || {}, request.body.wardrobe || []))
 })
 
